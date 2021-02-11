@@ -23,5 +23,17 @@ def test_create(base_client):
     assert len(response_json['termination_password']) == 36
 
 
+@pytest.fixture
+def get_game(base_client)
+    resp = base_client.get('/game/create/1')
+    resp_json = resp.json()
+    return resp_json
+
+
+def test_initialize(get_game):
+    game_id = get_game['game_id']
+
+
+
 if __name__ == '__main__':
     pytest.main()
