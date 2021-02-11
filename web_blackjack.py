@@ -35,7 +35,7 @@ async def create_game(num_players: int = Path(..., description='the number of pl
     return {'success': True, 'game_id': new_uuid, 'termination_password': new_term_pass}
 
 
-@app.get('/game/{game_id}/initialize')
+@app.post('/game/{game_id}/initialize')
 async def init_game(game_id: str = Path(..., description='the unique game id')):
     the_game = await get_game(game_id)
     the_game.initial_deal()
@@ -91,7 +91,7 @@ async def delete_game(game_id: str = Path(..., description='the unique game id')
                       password: str = Query(..., description='the termination password')):
     the_game = await BLACKJACK_DB.del_game(game_id, password)
     if the_game is False:
-        raise HTTPException(status_code=404, detail="Game not found.")
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Game not found.")
     return {'success': True, 'deleted_id': game_id}
 
 
