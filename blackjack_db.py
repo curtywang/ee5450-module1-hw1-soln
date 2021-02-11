@@ -45,6 +45,13 @@ class AsyncBlackjackGameDB(object):
         return self._current_games.get(game_id, None)
 
     async def del_game(self, game_id: str, term_pass: str) -> bool:
+        """
+        Asks the database to terminate a specific game.
+
+        :param game_id: the UUID of the specific game
+        :param term_pass: the termination password for the game
+        :return: False or exception if not found, True if success
+        """
         try:
             await asyncio.sleep(self._QUERY_TIME)  # simulate query time
             if self._termination_passwords[game_id] == term_pass:
