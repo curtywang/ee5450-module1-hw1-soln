@@ -29,7 +29,7 @@ async def home():
 
 
 @app.get('/game/create/{num_players}', status_code=status.HTTP_201_CREATED)
-async def create_game(num_players: int = Path(..., description='the number of players'),
+async def create_game(num_players: int = Path(..., gt=0, description='the number of players'),
                       num_decks: Optional[int] = Query(2, description='the number of decks to use')):
     new_uuid, new_term_pass = await BLACKJACK_DB.add_game(num_players=num_players, num_decks=num_decks)
     return {'success': True, 'game_id': new_uuid, 'termination_password': new_term_pass}
